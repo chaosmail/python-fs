@@ -19,9 +19,15 @@ def rename(oldPath, newPath, **kwargs):
     return os.rename(oldPath, newPath, **kwargs)
 
 def truncate(path, **kwargs):
-    """truncate *path* directory"""
-    rmdir(path, **kwargs)
-    mkdir(path, **kwargs)
+    """remove all files from a directory"""
+    if abspath(path) == abspath('.'):
+        # TODO: truncate current directory 
+        # Remove all files
+        pass
+    else:
+        """truncate *path* directory"""
+        rmdir(path, **kwargs)
+        mkdir(path, **kwargs)
 
 def chdir(path, **kwargs):
     """Change current working directory"""
@@ -76,14 +82,10 @@ def mkdir(path, recursive=True, **kwargs):
     else:
         os.mkdir(path, **kwargs)
 
-def touch(path, **kwargs):
+def touch(path):
     """Unix equivalent *touch*
-    @src: http://stackoverflow.com/a/1160227"""
-    import os
-    flags = os.O_CREAT | os.O_APPEND
-    with os.fdopen(os.open(path, flags=flags, **kwargs)) as f:
-        os.utime(f.fileno() if os.utime in os.supports_fd else path,
-            dir_fd=None if os.supports_fd else dir_fd)
+    @src: http://stackoverflow.com/a/1158096"""
+    open(path, 'wa').close()
 
 def exists(path, **kwargs):
     """Check if file or directory exists"""
@@ -166,19 +168,25 @@ def put(path, content, encoding="UTF-8"):
         cont_enc = content.encode(encoding)
         _file.write(content)
 
+def append(path, content, encoding="UTF-8"):
+    """Append *content* to file in *path*"""
+    with open(path, 'a+') as _file:
+        cont_enc = content.encode(encoding)
+        _file.write(content)
+
 def get(path, encoding="UTF-8"):
     """Get *content* from file in *path*"""
     with open(path, 'r') as _file:
         cont = _file.read()
         return cont.decode(encoding)
 
-def content(path, content=None):
+def content(path, content=None, encoding="UTF-8"):
     """Access the content of a file in *path*
     and either *get* or *set* the content"""
     if content:
-        put(path, content)
+        put(path, content, encoding)
     else:
-        return get(path)
+        return get(path, encoding)
 
 def join(*args, **kwargs):
     """Join parts of a path together"""
@@ -197,7 +205,7 @@ def extension(path, **kwargs):
     """Return the extension from *path*"""
     import os.path
     name, ext = os.path.splitext(path, **kwargs)
-    return ext
+    return ext[1:]
 
 def filename(path, **kwargs):
     """Return the file name from *path*"""
