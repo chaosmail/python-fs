@@ -2,7 +2,24 @@
 
 I am trying to create a pythonic file system api, please help me :)
 
-This is under development!
+This is under active development!
+
+## Documentation
+
+```python
+import fs
+```
+
+### isfile(path)
+
+Reurns true if the *path* exists and is a file.
+
+```python
+>>> fs.isfile('test.txt')
+True
+>>> fs.isfile('some_directory')
+False
+```
 
 ## License
 
