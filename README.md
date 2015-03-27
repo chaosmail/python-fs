@@ -15,9 +15,9 @@ import fs
 Reurns true if the *path* exists. Returns False if *path* does not exist.
 
 ```python
->>> fs.isdir('test.txt')
+>>> fs.exists('test.txt')
 True
->>> fs.isdir('some_directory')
+>>> fs.exists('some_directory')
 True
 ```
 
