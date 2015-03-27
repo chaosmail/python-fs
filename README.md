@@ -164,7 +164,7 @@ Returns an array of directories that match *pattern* and are contained in the di
 ```python
 >>> fs.finddirs('some*')
 ['/path/to/file/some_directory']
->>> fs.find('some*', exclude='*directory')
+>>> fs.finddirs('some*', exclude='*directory')
 []
 ```
 
