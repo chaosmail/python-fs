@@ -12,7 +12,7 @@ import fs
 
 ### fs.exists(path)
 
-Reurns true if the *path* exists. Returns False if *path* does not exist.
+Reurns True if the *path* exists. Returns False if *path* does not exist.
 
 ```python
 >>> fs.exists('test.txt')
@@ -23,7 +23,7 @@ True
 
 ### fs.isfile(path)
 
-Reurns true if the *path* exists and is a file. Returns False if *path* is a directory or does not exist.
+Reurns True if the *path* exists and is a file. Returns False if *path* is a directory or does not exist.
 
 ```python
 >>> fs.isfile('test.txt')
@@ -34,7 +34,7 @@ False
 
 ### fs.isdir(path)
 
-Reurns true if the *path* exists and is a directory. Returns False if *path* is a file or does not exist.
+Reurns True if the *path* exists and is a directory. Returns False if *path* is a file or does not exist.
 
 ```python
 >>> fs.isdir('test.txt')
