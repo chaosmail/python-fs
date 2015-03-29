@@ -1,6 +1,8 @@
 # Python FS - a pythonic file system wrapper for humans
 
-I am trying to create a pythonic file system api, please help me :)
+[![Build Status](https://travis-ci.org/chaosmail/python-fs.svg?branch=master)](https://travis-ci.org/chaosmail/python-fs)
+
+An easy to use file system wrapper for Python that aims to simplify os, os.path, os.walk, shutils, fnmatch, etc.
 
 This is under active development!
 
