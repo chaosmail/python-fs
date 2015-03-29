@@ -51,11 +51,22 @@ def abspath(path, **kwargs):
     import os.path
     return os.path.abspath(path, **kwargs)
 
-def unlink(path, **kwargs):
-    """Unix equivalent *unlink*
-    Remove the file *path*"""
+def rm(path, **kwargs):
+    """Remove *path* which can be either a file
+    or a directory"""
+    if isfile(path):
+        rmfile(path, **kwargs)
+    else:
+        rmdir(path, **kwargs)
+
+def rmfile(path, **kwargs):
+    """Remove the file *path*"""
     import os
     return os.unlink(path, **kwargs)
+
+def unlink(*args, **kwargs):
+    """Unix equivalent *unlink*"""
+    return rmfile(*args, **kwargs)
 
 def rmdir(path, recursive=True, **kwargs):
     """Remove the directory *path*"""
@@ -65,14 +76,6 @@ def rmdir(path, recursive=True, **kwargs):
     else:
         import os
         return os.remdir(path, **kwargs)
-
-def rm(path, **kwargs):
-    """Remove *path* which can be either a file
-    or a directory"""
-    if isfile(path):
-        unlink(path, **kwargs)
-    else:
-        rmdir(path, **kwargs)
 
 def mkdir(path, recursive=True, **kwargs):
     """Unix equivalent *mkdir*"""
