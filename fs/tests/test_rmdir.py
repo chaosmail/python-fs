@@ -27,7 +27,7 @@ def test_rmdir_file():
     try:
         with pytest.raises(NotADirectoryError):
             fs.rmdir(TEST_FILE)
-    except NameError, e:
+    except NameError as e:
         with pytest.raises(OSError):
             fs.rmdir(TEST_FILE)
 
