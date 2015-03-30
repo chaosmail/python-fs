@@ -137,6 +137,13 @@ Returns an array of files that are contained in the directory *path*. Raises an 
 ['another_test.txt']
 ```
 
+Example: *Loop over all files in the current directory*:
+
+```python
+>>> for file in fs.listfiles():
+		pass
+```
+
 ### fs.listdirs(path='.')
 
 Returns an array of directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
@@ -148,6 +155,13 @@ Returns an array of directories that are contained in the directory *path*. Rais
 []
 ```
 
+Example: *Loop over all directories in the current directory*:
+
+```python
+>>> for dir in fs.listdirs():
+		pass
+```
+
 ### fs.find(pattern, path='.', exclude=None, recursive=True)
 
 Returns an array of files that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
@@ -157,6 +171,27 @@ Returns an array of files that match *pattern* and are contained in the director
 ['/path/to/file/test.txt', '/path/to/file/some_directory/another_test.txt']
 >>> fs.find('*.txt', exclude='another*')
 ['/path/to/file/test.txt']
+```
+
+Example: *Loop over all .csv files in the current directory*:
+
+```python
+>>> for file in fs.find('*.csv', recursive=False):
+		pass
+```
+
+Example: *Loop over all .xls and .xlsx files in the current directory and all sub-directories*:
+
+```python
+>>> for file in fs.find(['*.xls', '*.xlsx']):
+		pass
+```
+
+Example: *Loop over all .ini files in the config directory and all sub-directories except the ones starting with local_*:
+
+```python
+>>> for file in fs.find('*.ini', path='config', exclude='local_*'):
+		pass
 ```
 
 ### fs.finddirs(pattern, path='.', exclude=None, recursive=True)
