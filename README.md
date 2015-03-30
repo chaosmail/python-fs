@@ -154,7 +154,7 @@ Example: *Remove all directories that start with local_*:
 
 ### fs.touch(path)
 
-Sets the timestamp of the file *path* to the current time or creates the file if *path* does not exist. Raises an *IOError* exception if *path* is a directory.
+Sets the modification timestamp of *path* to the current time or creates the file if *path* does not exist. Directories not supported on Windows.
 
 ```python
 >>> fs.touch('test.txt')
