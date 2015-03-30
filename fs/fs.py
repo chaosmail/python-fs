@@ -19,15 +19,10 @@ def rename(oldPath, newPath, **kwargs):
     return os.rename(oldPath, newPath, **kwargs)
 
 def truncate(path, **kwargs):
-    """remove all files from a directory"""
-    if abspath(path) == abspath('.'):
-        # TODO: truncate current directory 
-        # Remove all files
-        pass
-    else:
-        """truncate *path* directory"""
-        rmdir(path, **kwargs)
-        mkdir(path, **kwargs)
+    """remove all files and directories 
+    from a directory *path*"""
+    rmfiles(listfiles(path))
+    rmdirs(listdirs(path))
 
 def chdir(path, **kwargs):
     """Change current working directory"""
@@ -64,6 +59,11 @@ def rmfile(path, **kwargs):
     import os
     return os.unlink(path, **kwargs)
 
+def rmfiles(paths, **kwargs):
+    """Remove an array of files *path*"""
+    for p in paths:
+        rmfile(p, **kwargs)
+
 def unlink(*args, **kwargs):
     """Unix equivalent *unlink*"""
     return rmfile(*args, **kwargs)
@@ -76,6 +76,11 @@ def rmdir(path, recursive=True, **kwargs):
     else:
         import os
         return os.remdir(path, **kwargs)
+
+def rmdirs(paths, **kwargs):
+    """Remove an array of files *path*"""
+    for p in paths:
+        rmdir(p, **kwargs)
 
 def mkdir(path, recursive=True, **kwargs):
     """Unix equivalent *mkdir*"""
@@ -99,25 +104,30 @@ def access(path, **kwargs):
     pass
 
 def list(path='.'):
-    """list all files and directories of *path*"""
+    """generator that returns all files 
+    and directories of *path*"""
     import os
-    return [f for f in os.listdir(path)]
+    for f in os.listdir(path):
+        yield join(path, f) if path != '.' else f
 
 def listfiles(path='.'):
-    """list all files of *path*"""
+    """generator that returns all files of *path*"""
     import os
-    return [f for f in os.listdir(path) if isfile(f)]
+    for f in os.listdir(path):
+        if isfile(join(path, f)):
+            yield join(path, f) if path != '.' else f
 
 def listdirs(path='.'):
-    """list all directories of *path*"""
+    """generator that returns all directories of *path*"""
     import os
-    return [f for f in os.listdir(path) if isdir(f)]
+    for f in os.listdir(path):
+        if isdir(join(path, f)):
+            yield join(path, f) if path != '.' else f
 
 def find(pattern, path='.', exclude=None, recursive=True):
     """Find files that match *pattern* in *path*"""
     import fnmatch
     import os
-    files = []
     if recursive:
         for root, dirnames, filenames in os.walk(path):
             for pat in _to_list(pattern):
@@ -127,7 +137,7 @@ def find(pattern, path='.', exclude=None, recursive=True):
                         if excl and fnmatch.fnmatch(filepath, excl):
                             break
                     else:
-                        files.append(filepath)
+                        yield filepath
     else:
         for pat in _to_list(pattern):
             for filename in fnmatch.filter(listfiles(path), pat):
@@ -136,14 +146,12 @@ def find(pattern, path='.', exclude=None, recursive=True):
                     if excl and fnmatch.fnmatch(filepath, excl):
                         break
                     else:
-                        files.append(filepath)
-    return files
+                        yield filepath
 
 def finddirs(pattern, path='.', exclude=None, recursive=True):
     """Find directories that match *pattern* in *path*"""
     import fnmatch
     import os
-    dirs = []
     if recursive:
         for root, dirnames, filenames in os.walk(path):
             for pat in _to_list(pattern):
@@ -153,7 +161,7 @@ def finddirs(pattern, path='.', exclude=None, recursive=True):
                         if excl and fnmatch.fnmatch(dirpath, excl):
                             break
                     else:
-                        dirs.append(dirpath)
+                        yield dirpath
     else:
         for pat in _to_list(pattern):
             for dirname in fnmatch.filter(listdirs(path), pat):
@@ -162,8 +170,7 @@ def finddirs(pattern, path='.', exclude=None, recursive=True):
                     if excl and fnmatch.fnmatch(dirpath, excl):
                         break
                 else:
-                    dirs.append(dirpath)
-    return dirs
+                    yield dirpath
 
 def put(path, content, encoding="UTF-8"):
     """Put *content* to file in *path*"""

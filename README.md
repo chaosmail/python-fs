@@ -91,12 +91,35 @@ Deletes *path* where *path* can be either a file or directory. Raises an *OSErro
 ```
 
 
-### fs.unlink(path)
+### fs.rmfile(path)
 
 Deletes the file *path*. Raises an *OSError* exception if the file does not exist or *path* is a directory.
 
 ```python
->>> fs.unlink('test.txt')
+>>> fs.rmfile('test.txt')
+```
+
+The Unix-like *fs.unlink* is the same as *fs.rmfile*.
+
+### fs.rmfiles(paths)
+
+Deletes an array of files *paths*. Raises an *OSError* exception if a file does not exist or an element of *paths* is a directory.
+
+```python
+>>> fs.rmfiles(['test.txt', 'another_file.txt'])
+```
+
+Example: *Remove all files from the current directory*:
+
+```python
+>>> fs.rmfiles( fs.listfiles() )
+```
+
+
+Example: *Remove all .pyc files from a directory*:
+
+```python
+>>> fs.rmfiles( fs.find('*.pyc') )
 ```
 
 ### fs.rmdir(path, recursive=True)
@@ -106,6 +129,28 @@ Deletes the directory *path* with all containing files and directories. Raises a
 ```python
 >>> fs.rmdir('some_directory')
 ```
+
+### fs.rmdirs(paths, recursive=True)
+
+Deletes an array of directories *paths* with all containing files and directories. Raises an *OSError* exception if a directory does not exist or an element of *paths* is a file.
+
+```python
+>>> fs.rmdirs(['some_directory', 'some_other_dir'])
+```
+
+Example: *Remove all directories from the current directory*:
+
+```python
+>>> fs.rmdirs( fs.listdirs() )
+```
+
+
+Example: *Remove all directories that start with local_*:
+
+```python
+>>> fs.rmdirs( fs.finddirs('local_*') )
+```
+
 
 ### fs.touch(path)
 
@@ -117,93 +162,119 @@ Sets the timestamp of the file *path* to the current time or creates the file if
 
 ### fs.list(path='.')
 
-Returns an array of files and directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
+Generator the returns all files and directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
->>> fs.list()
+>>> gen = fs.list()
+>>> list(gen)
 ['some_directory', 'test.txt']
->>> fs.list('some_directory')
+>>> gen = fs.list('some_directory')
+>>> list(gen)
 ['another_test.txt']
 ```
 
-### fs.listfiles(path='.')
-
-Returns an array of files that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
+Example: *Loop over all files and directories in the current directory*:
 
 ```python
->>> fs.listfiles()
+>>> for f in fs.list():
+		pass
+```
+
+
+### fs.listfiles(path='.')
+
+Generator the returns all files that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
+
+```python
+>>> gen = fs.listfiles()
+>>> list(gen)
 ['test.txt']
->>> fs.listfiles('some_directory')
-['another_test.txt']
+>>> gen = fs.listfiles('some_directory')
+>>> list(gen)
+['/path/to/dir/some_directory/another_test.txt']
 ```
 
 Example: *Loop over all files in the current directory*:
 
 ```python
->>> for file in fs.listfiles():
+>>> for f in fs.listfiles():
 		pass
 ```
 
 ### fs.listdirs(path='.')
 
-Returns an array of directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
+Generator the returns all directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
->>> fs.listdirs()
+>>> gen = fs.listdirs()
+>>> list(gen)
 ['some_directory']
->>> fs.listdirs('some_directory')
+>>> gen = fs.listdirs('some_directory')
+>>> list(gen)
 []
 ```
 
 Example: *Loop over all directories in the current directory*:
 
 ```python
->>> for directory in fs.listdirs():
+>>> for d in fs.listdirs():
 		pass
 ```
 
 ### fs.find(pattern, path='.', exclude=None, recursive=True)
 
-Returns an array of files that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
+Generator the returns all files that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
->>> fs.find('*.txt')
+>>> gen = fs.find('*.txt')
+>>> list(gen)
 ['/path/to/file/test.txt', '/path/to/file/some_directory/another_test.txt']
->>> fs.find('*.txt', exclude='another*')
+>>> gen = fs.find('*.txt', exclude='another*')
+>>> list(gen)
 ['/path/to/file/test.txt']
 ```
 
 Example: *Loop over all .csv files in the current directory*:
 
 ```python
->>> for file in fs.find('*.csv', recursive=False):
+>>> for f in fs.find('*.csv', recursive=False):
 		pass
 ```
 
 Example: *Loop over all .xls and .xlsx files in the current directory and all sub-directories*:
 
 ```python
->>> for file in fs.find(['*.xls', '*.xlsx']):
+>>> for f in fs.find(['*.xls', '*.xlsx']):
 		pass
 ```
 
 Example: *Loop over all .ini files in the config directory and all sub-directories except the ones starting with local_*:
 
 ```python
->>> for file in fs.find('*.ini', path='config', exclude='local_*'):
+>>> for f in fs.find('*.ini', path='config', exclude='local_*'):
 		pass
 ```
 
 ### fs.finddirs(pattern, path='.', exclude=None, recursive=True)
 
-Returns an array of directories that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
+Generator the returns all directories that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
->>> fs.finddirs('some*')
+>>> gen = fs.finddirs('some*')
+>>> list(gen)
 ['/path/to/file/some_directory']
->>> fs.finddirs('some*', exclude='*directory')
+>>> gen = fs.finddirs('some*', exclude='*directory')
+>>> list(gen)
 []
 ```
+
+Example: *Loop over all .git directories in the current directory and all subdirectories*:
+
+```python
+>>> for d in fs.find('.git'):
+		pass
+```
+
 
 ### fs.content(path, content=None, encoding="UTF-8")
 
