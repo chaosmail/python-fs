@@ -1,7 +1,12 @@
 
+import os, types
+
 """Helper Functions"""
-LIST_TYPE = list
-_to_list = lambda e: e if isinstance(e, LIST_TYPE) else [e]
+_is_list = lambda e: isinstance(e, types.ListType)
+_to_list = lambda e: e if _is_list(e) else [e]
+
+"""Constants"""
+sep = os.sep
 
 def isfile(path, **kwargs):
     """Check if *path* is a file"""
@@ -205,6 +210,8 @@ def content(path, content=None, encoding="UTF-8"):
 def join(*args, **kwargs):
     """Join parts of a path together"""
     import os.path
+    if _is_list(args[0]):
+        return os.path.join(*args[0])
     return os.path.join(*args, **kwargs)
 
 def cwd(path=None, **kwargs):

@@ -312,12 +312,29 @@ Appends the content *content* of a file *path*. Raises an *IOError* exception if
 >>> fs.append('text.txt', 'test')
 ```
 
-### fs.join(part_of_path, part_of_path, ...)
+### fs.sep
 
-Joins different parts of a path together.
+The character used by the operating system to separate pathname components. This is '/' for POSIX and '\\' for Windows.
 
 ```python
->>> fs.join('/path/to', 'directory')
+>>> fs.sep
+'/'
+```
+
+### fs.join(paths)
+
+Joins an array of *parts* with *fs.sep*.
+
+```python
+>>> fs.join([fs.sep, 'path', 'to', 'directory'])
+'/path/to/directory'
+```
+
+Additionally, you can also pass the path elements as arguments *fs.join(path, path, ...)*.
+
+```python
+>>> fs.join(fs.sep, 'path', 'to', 'directory')
+'/path/to/directory'
 ```
 
 ### fs.cwd(path=None)
