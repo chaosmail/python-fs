@@ -1,23 +1,28 @@
 
 import os
 
+"""Constants"""
+
+sep = os.sep
+try:
+    import types
+    LIST_TYPE = types.ListType
+except Exception:
+    LIST_TYPE = list
+
+    
 """Helper Functions"""
+
 def _is_list(e):
     """retruns true if *e* is a list type"""
-    try:
-        import types
-        LIST_TYPE = types.ListType
-    except Exception:
-        LIST_TYPE = list
-    
     return isinstance(e, LIST_TYPE)
 
 def _to_list(e):
     """returns always a list containing *e*"""
     return e if _is_list(e) else [e]
 
-"""Constants"""
-sep = os.sep
+
+"""Filesystem Methods"""
 
 def isfile(path, **kwargs):
     """Check if *path* is a file"""
