@@ -83,23 +83,21 @@ Returns the absolute path from a relative *path* where *path* can be either file
 
 ### fs.rm(path)
 
-Deletes *path* where *path* can be either a file or directory. Raises an *OSError* exception if *path* does not exist.
-
-```python
->>> fs.rm('test.txt')
->>> fs.rm('some_directory')
-```
-
-
-### fs.rmfile(path)
-
 Deletes the file *path*. Raises an *OSError* exception if the file does not exist or *path* is a directory.
 
 ```python
->>> fs.rmfile('test.txt')
+>>> fs.rm('test.txt')
 ```
 
-The Unix-like *fs.unlink* is the same as *fs.rmfile*.
+The Unix-like *fs.unlink* is the same as *fs.rm*.
+
+### fs.rmdir(path, recursive=True)
+
+Deletes the directory *path* with all containing files and directories. Raises an *OSError* exception if the directory does not exist or *path* is a file.
+
+```python
+>>> fs.rmdir('some_directory')
+```
 
 ### fs.rmfiles(paths)
 
@@ -112,7 +110,7 @@ Deletes an array of files *paths*. Raises an *OSError* exception if a file does 
 Example: *Remove all files from the current directory*:
 
 ```python
->>> fs.rmfiles( fs.listfiles() )
+>>> fs.rmfiles( fs.list() )
 ```
 
 
@@ -120,14 +118,6 @@ Example: *Remove all .pyc files from a directory*:
 
 ```python
 >>> fs.rmfiles( fs.find('*.pyc') )
-```
-
-### fs.rmdir(path, recursive=True)
-
-Deletes the directory *path* with all containing files and directories. Raises an *OSError* exception if the directory does not exist or *path* is a file.
-
-```python
->>> fs.rmdir('some_directory')
 ```
 
 ### fs.rmdirs(paths, recursive=True)
@@ -162,34 +152,13 @@ Sets the modification timestamp of *path* to the current time or creates the fil
 
 ### fs.list(path='.')
 
-Generator the returns all files and directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
+Generator the returns all files that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
 >>> gen = fs.list()
 >>> list(gen)
-['some_directory', 'test.txt']
->>> gen = fs.list('some_directory')
->>> list(gen)
-['another_test.txt']
-```
-
-Example: *Loop over all files and directories in the current directory*:
-
-```python
->>> for f in fs.list():
-		pass
-```
-
-
-### fs.listfiles(path='.')
-
-Generator the returns all files that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
-
-```python
->>> gen = fs.listfiles()
->>> list(gen)
 ['test.txt']
->>> gen = fs.listfiles('some_directory')
+>>> gen = fs.list('some_directory')
 >>> list(gen)
 ['/path/to/dir/some_directory/another_test.txt']
 ```
@@ -197,7 +166,7 @@ Generator the returns all files that are contained in the directory *path*. Rais
 Example: *Loop over all files in the current directory*:
 
 ```python
->>> for f in fs.listfiles():
+>>> for f in fs.list():
 		pass
 ```
 

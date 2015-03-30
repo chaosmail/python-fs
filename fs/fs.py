@@ -1,9 +1,20 @@
 
-import os, types
+import os
 
 """Helper Functions"""
-_is_list = lambda e: isinstance(e, types.ListType)
-_to_list = lambda e: e if _is_list(e) else [e]
+def _is_list(e):
+    """retruns true if *e* is a list type"""
+    try:
+        import types
+        LIST_TYPE = types.ListType
+    except Exception, e:
+        LIST_TYPE = list
+    
+    return isinstance(e, LIST_TYPE)
+
+def _to_list(e):
+    """returns always a list containing *e*"""
+    return e if _is_list(e) else [e]
 
 """Constants"""
 sep = os.sep
@@ -26,7 +37,7 @@ def rename(oldPath, newPath, **kwargs):
 def truncate(path, **kwargs):
     """remove all files and directories 
     from a directory *path*"""
-    rmfiles(listfiles(path))
+    rmfiles(list(path))
     rmdirs(listdirs(path))
 
 def chdir(path, **kwargs):
@@ -52,26 +63,13 @@ def abspath(path, **kwargs):
     return os.path.abspath(path, **kwargs)
 
 def rm(path, **kwargs):
-    """Remove *path* which can be either a file
-    or a directory"""
-    if isfile(path):
-        rmfile(path, **kwargs)
-    else:
-        rmdir(path, **kwargs)
-
-def rmfile(path, **kwargs):
     """Remove the file *path*"""
     import os
     return os.unlink(path, **kwargs)
 
-def rmfiles(paths, **kwargs):
-    """Remove an array of files *path*"""
-    for p in paths:
-        rmfile(p, **kwargs)
-
 def unlink(*args, **kwargs):
     """Unix equivalent *unlink*"""
-    return rmfile(*args, **kwargs)
+    return rm(*args, **kwargs)
 
 def rmdir(path, recursive=True, **kwargs):
     """Remove the directory *path*"""
@@ -81,6 +79,11 @@ def rmdir(path, recursive=True, **kwargs):
     else:
         import os
         return os.remdir(path, **kwargs)
+
+def rmfiles(paths, **kwargs):
+    """Remove an array of files *path*"""
+    for p in paths:
+        rm(p, **kwargs)
 
 def rmdirs(paths, **kwargs):
     """Remove an array of files *path*"""
@@ -113,13 +116,6 @@ def access(path, **kwargs):
     pass
 
 def list(path='.'):
-    """generator that returns all files 
-    and directories of *path*"""
-    import os
-    for f in os.listdir(path):
-        yield join(path, f) if path != '.' else f
-
-def listfiles(path='.'):
     """generator that returns all files of *path*"""
     import os
     for f in os.listdir(path):
