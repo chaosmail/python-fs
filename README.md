@@ -158,7 +158,7 @@ Returns an array of directories that are contained in the directory *path*. Rais
 Example: *Loop over all directories in the current directory*:
 
 ```python
->>> for dir in fs.listdirs():
+>>> for directory in fs.listdirs():
 		pass
 ```
 
