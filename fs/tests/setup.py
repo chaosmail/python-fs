@@ -6,6 +6,7 @@ TEST_DIR = os.path.join(DIR, "test_dir")
 TEST_DIR_2 = os.path.join(TEST_DIR, "test_dir_2")
 TEST_DIR_3 = os.path.join(TEST_DIR, "test_dir_3")
 TEST_FILE = os.path.join(TEST_DIR, "test_file.txt")
+TEST_FILE_2 = os.path.join(TEST_DIR, "another_file.txt")
 
 def setup_module(module):
     """ setup any state specific to the execution of the given module."""
@@ -31,6 +32,7 @@ def setup_function(function):
     
     # Create a test file
     open(TEST_FILE, 'w+').close()
+    open(TEST_FILE_2, 'w+').close()
 
 def teardown_function(function):
     """ teardown any state that was previously setup with a setup_function
