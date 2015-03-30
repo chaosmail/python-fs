@@ -7,7 +7,7 @@ def _is_list(e):
     try:
         import types
         LIST_TYPE = types.ListType
-    except Exception, e:
+    except Exception:
         LIST_TYPE = list
     
     return isinstance(e, LIST_TYPE)
