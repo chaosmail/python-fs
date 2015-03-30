@@ -1,5 +1,7 @@
+import os
 import os.path
 import time
+import pytest
 import fs
 
 from .setup import *
@@ -23,3 +25,13 @@ def test_touch_on_new_file():
     fs.touch(new_file)
 
     assert os.path.exists(new_file) is True
+
+@pytest.mark.skipif(os.name == "nt", reason="does not work on windows")
+def test_touch_on_directory():
+
+    before_time = time.ctime(os.path.getmtime(TEST_DIR))
+
+    fs.touch(TEST_DIR)
+    after_time = time.ctime(os.path.getmtime(TEST_DIR))
+
+    assert after_time >= before_time

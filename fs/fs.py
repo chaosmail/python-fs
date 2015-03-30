@@ -93,7 +93,11 @@ def mkdir(path, recursive=True, **kwargs):
 def touch(path):
     """Unix equivalent *touch*
     @src: http://stackoverflow.com/a/1158096"""
-    open(path, 'a+').close()
+    import os
+    try:
+        open(path, 'a+').close()
+    except IOError:
+        os.utime(path, None)
 
 def exists(path, **kwargs):
     """Check if file or directory exists"""
