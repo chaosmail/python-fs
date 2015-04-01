@@ -6,7 +6,17 @@ An easy to use file system wrapper for Python that aims to simplify os, os.path,
 
 This is under active development!
 
+## Installation
+
+```bash
+git clone https://github.com/chaosmail/python-fs.git
+cd python-fs
+python setup.py install
+```
+
 ## Documentation
+
+First, import the python-fs module.
 
 ```python
 import fs
