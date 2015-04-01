@@ -332,16 +332,16 @@ Additionally, you can also pass the path elements as arguments *fs.join(path, pa
 
 ### fs.extname(path)
 
-Returns the extension of a file *path*.
+Returns the extension name of a file *path*.
 
 ```python
 >>> fs.extname('/path/to/file/test.txt')
 '.txt'
 ```
 
-### fs.basename(path)
+### fs.basename(path, ext="")
 
-Returns the filename of a file *path*.
+Returns the base name of a file *path*.
 
 ```python
 >>> fs.basename('/path/to/file/test.txt')
@@ -352,7 +352,7 @@ Returns the filename of a file *path*.
 
 ### fs.dirname(path)
 
-Returns the directory of a file *path*.
+Returns the directory name of a file *path*.
 
 ```python
 >>> fs.dirname('/path/to/file/test.txt')
