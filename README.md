@@ -268,7 +268,7 @@ Generator the returns all directories that match *pattern* and are contained in 
 Example: *Loop over all .git directories in the current directory and all subdirectories*:
 
 ```python
->>> for d in fs.find('.git'):
+>>> for d in fs.finddirs('.git'):
 		pass
 ```
 
