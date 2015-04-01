@@ -67,6 +67,11 @@ def abspath(path, **kwargs):
     import os.path
     return os.path.abspath(path, **kwargs)
 
+def normalize(path, **kwargs):
+    """Return the normalized path of *path*"""
+    import os.path
+    return os.path.normpath(path, **kwargs)
+
 def rm(path, **kwargs):
     """Remove the file *path*"""
     import os
@@ -182,11 +187,20 @@ def finddirs(pattern, path='.', exclude=None, recursive=True):
                 else:
                     yield dirpath
 
-def put(path, content, encoding="UTF-8"):
+def put_raw(path, content):
+    """Put raw binary *content* to the file *path*"""
+    import shutil
+    with open(path, 'wb') as _file:
+        shutil.copyfileobj(content, _file)
+
+def put(path, content, encoding="UTF-8", raw=False):
     """Put *content* to file in *path*"""
-    with open(path, 'w+') as _file:
-        cont_enc = content.encode(encoding)
-        _file.write(content)
+    if raw:
+        put_raw(path, content)
+    else:
+        with open(path, 'w+') as _file:
+            cont_enc = content.encode(encoding)
+            _file.write(content)
 
 def append(path, content, encoding="UTF-8"):
     """Append *content* to file in *path*"""
@@ -223,16 +237,24 @@ def cwd(path=None, **kwargs):
     else:
         return os.getcwd(**kwargs)
 
-def extension(path, **kwargs):
+def extname(path, **kwargs):
     """Return the extension from *path*"""
     import os.path
     name, ext = os.path.splitext(path, **kwargs)
-    return ext[1:]
+    return ext
 
-def filename(path, **kwargs):
-    """Return the file name from *path*"""
+def extension(*args, **kwargs):
+    """Alias for extname"""
+    return extname(*args, **kwargs)
+
+def basename(path, ext="", **kwargs):
+    """Return the file base name from *path*"""
     import os.path
-    return os.path.basename(path, **kwargs)
+    return os.path.basename(path, **kwargs).replace(ext, "")
+
+def filename(*args, **kwargs):
+    """Alias for basename"""
+    return basename(*args, **kwargs)
 
 def dirname(path, **kwargs):
     """Return the directory name from *path*"""

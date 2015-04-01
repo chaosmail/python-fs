@@ -80,6 +80,15 @@ Changes the current directory to *path*.
 >>> fs.chdir('some_directory')
 ```
 
+### fs.cwd()
+
+Get the current working directory.
+
+```python
+>>> fs.cwd()
+'/path/to/directory'
+```
+
 ### fs.abspath(path)
 
 Returns the absolute path from a relative *path* where *path* can be either file or directory.
@@ -89,6 +98,15 @@ Returns the absolute path from a relative *path* where *path* can be either file
 '/path/to/file/test.txt'
 >>> fs.abspath('some_directory')
 '/path/to/file/some_directory'
+```
+
+### fs.normalize(path)
+
+Returns the normalized path from a *path* where *path* can be either file or directory.
+
+```python
+>>> fs.normalize('test_dir/../test/test.txt')
+'test/test.txt'
 ```
 
 ### fs.rm(path)
@@ -254,18 +272,6 @@ Example: *Loop over all .git directories in the current directory and all subdir
 		pass
 ```
 
-
-### fs.content(path, content=None, encoding="UTF-8")
-
-Returns or sets the content of a file *path*.
-
-```python
->>> fs.content('text.txt')
-u'test'
->>> fs.content('text.txt', 'test')
-```
-
-
 ### fs.get(path, encoding='UTF-8')
 
 Returns the content of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
@@ -275,12 +281,20 @@ Returns the content of a file *path*. Raises an *IOError* exception if the file 
 u'test'
 ```
 
-### fs.put(path, content, encoding='UTF-8')
+### fs.put(path, content, encoding='UTF-8', raw=False)
 
 Sets the content *content* of a file *path*.
 
 ```python
 >>> fs.set('text.txt', 'test')
+```
+
+Example: *Download an image from an url using requests and save it to local disc*:
+
+```python
+>>> import requests
+>>> r = requests.get(url, stream=True)
+>>> fs.put(path, r.raw, raw=True)
 ```
 
 ### fs.append(path, content, encoding='UTF-8')
@@ -316,31 +330,23 @@ Additionally, you can also pass the path elements as arguments *fs.join(path, pa
 '/path/to/directory'
 ```
 
-### fs.cwd(path=None)
-
-Returns or sets the current working directory.
-
-```python
->>> fs.cwd()
-'/path/to/directory'
->>> fs.cwd('some_dir')
-```
-
-### fs.extension(path)
+### fs.extname(path)
 
 Returns the extension of a file *path*.
 
 ```python
->>> fs.extension('test.txt')
-'txt'
+>>> fs.extname('/path/to/file/test.txt')
+'.txt'
 ```
 
-### fs.filename(path)
+### fs.basename(path)
 
 Returns the filename of a file *path*.
 
 ```python
->>> fs.filename('test.txt')
+>>> fs.basename('/path/to/file/test.txt')
+'test.txt'
+>>> fs.basename('/path/to/file/test.txt', '.txt')
 'test'
 ```
 
