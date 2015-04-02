@@ -289,7 +289,7 @@ Sets the content *content* of a file *path*.
 >>> fs.set('text.txt', 'test')
 ```
 
-Example: *Download an image from an url using requests and save it to local disc*:
+Example: *Download an image from an url using [requests](http://docs.python-requests.org/en/latest/) and save it to local disc*:
 
 ```python
 >>> import requests
