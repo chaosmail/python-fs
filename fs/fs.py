@@ -187,40 +187,35 @@ def finddirs(pattern, path='.', exclude=None, recursive=True):
                 else:
                     yield dirpath
 
-def put_raw(path, content):
-    """Put raw binary *content* to the file *path*"""
-    import shutil
-    with open(path, 'wb') as _file:
-        shutil.copyfileobj(content, _file)
-
-def put(path, content, encoding="UTF-8", raw=False):
-    """Put *content* to file in *path*"""
+def write(path, content, encoding="UTF-8", append=False, raw=False):
+    """Write *content* to file *path*"""
     if raw:
-        put_raw(path, content)
+        import shutil
+        with open(path, 'wb') as _file:
+            shutil.copyfileobj(content, _file)
     else:
-        with open(path, 'w+') as _file:
+        mode = 'w+' if not append else 'a+'
+        with open(path, mode) as _file:
             cont_enc = content.encode(encoding)
             _file.write(content)
 
-def append(path, content, encoding="UTF-8"):
-    """Append *content* to file in *path*"""
-    with open(path, 'a+') as _file:
-        cont_enc = content.encode(encoding)
-        _file.write(content)
+def put(*args, **kwargs):
+    """Alias for write"""
+    return write(*args, **kwargs)
 
-def get(path, encoding="UTF-8"):
-    """Get *content* from file in *path*"""
+def append(*args, **kwargs):
+    """Alias for write with append=True"""
+    return write(*args, append=True, **kwargs)
+
+def read(path, encoding="UTF-8"):
+    """Read and return content from file *path*"""
     with open(path, 'r') as _file:
         cont = _file.read()
         return cont.decode(encoding)
 
-def content(path, content=None, encoding="UTF-8"):
-    """Access the content of a file in *path*
-    and either *get* or *set* the content"""
-    if content:
-        put(path, content, encoding)
-    else:
-        return get(path, encoding)
+def get(*args, **kwargs):
+    """Alias for read"""
+    return read(*args, **kwargs)
 
 def join(*args, **kwargs):
     """Join parts of a path together"""

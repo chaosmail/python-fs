@@ -272,21 +272,27 @@ Example: *Loop over all .git directories in the current directory and all subdir
 		pass
 ```
 
-### fs.get(path, encoding='UTF-8')
+### fs.read(path, encoding='UTF-8')
 
-Returns the content of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
+Reads and returns the content of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
 
 ```python
->>> fs.get('text.txt')
+>>> fs.read('text.txt')
 u'test'
 ```
 
-### fs.put(path, content, encoding='UTF-8', raw=False)
+### fs.write(path, content, encoding='UTF-8', append=False, raw=False)
 
-Sets the content *content* of a file *path*.
+Writes the content *content* of a file *path*.
 
 ```python
->>> fs.set('text.txt', 'test')
+>>> fs.write('text.txt', 'test')
+```
+
+Example: *Append content to a file*
+
+```python
+>>> fs.write('text.txt', 'test', append=True)
 ```
 
 Example: *Download an image from an url using [requests](http://docs.python-requests.org/en/latest/) and save it to local disc*:
@@ -294,15 +300,7 @@ Example: *Download an image from an url using [requests](http://docs.python-requ
 ```python
 >>> import requests
 >>> r = requests.get(url, stream=True)
->>> fs.put(path, r.raw, raw=True)
-```
-
-### fs.append(path, content, encoding='UTF-8')
-
-Appends the content *content* of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
-
-```python
->>> fs.append('text.txt', 'test')
+>>> fs.write(path, r.raw, raw=True)
 ```
 
 ### fs.sep
