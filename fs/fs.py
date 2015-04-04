@@ -62,6 +62,23 @@ def link(srcPath, destPath):
 def symlink(srcPath, destPath, type):
     pass
 
+def stat(path):
+    """Return file stats"""
+    import os
+    return os.stat(path)
+
+def ctime(path):
+    """platform dependent; time of most recent metadata change on Unix, or the time of creation on Windows"""
+    return stat(path).st_ctime
+
+def atime(path):
+    """Return time of most recent access"""
+    return stat(path).st_atime
+
+def mtime(path):
+    """time of most recent content modification"""
+    return stat(path).st_mtime
+
 def abspath(path, **kwargs):
     """Return the absolute path of *path*"""
     import os.path

@@ -55,9 +55,50 @@ False
 True
 ```
 
+### fs.stat(path)
+
+Returns a [stats object](https://docs.python.org/2/library/os.html#os.stat) that contains meta data of *path* where path can be either a file or directory. Raises *OSError* exception if *path* does not exist.
+
+```python
+>>> s = fs.stat('test.txt')
+>>> s.st_atime
+1428162423.839133
+>>> s.st_mtime
+1427919315.960152
+>>> s.st_ctime
+1427919315.960152
+```
+
+### fs.ctime(path)
+
+Platform dependent; returns time of most recent metadata change on Unix, or the time of creation on Windows of *path* where path can be either a file or directory. Raises *OSError* exception if *path* does not exist.
+
+```python
+>>> fs.ctime('test.txt')
+1427919315.960152
+```
+
+### fs.atime(path)
+
+Returns time of most recent access of *path* where path can be either a file or directory. Raises *OSError* exception if *path* does not exist.
+
+```python
+>>> fs.atime('test.txt')
+1428162423.839133
+```
+
+### fs.mtime(path)
+
+Returns time of most recent content modification of *path* where path can be either a file or directory. Raises *OSError* exception if *path* does not exist.
+
+```python
+>>> fs.mtime('test.txt')
+1427919315.960152
+```
+
 ### fs.rename(oldPath, newPath)
 
-Renames oldPath to new newPath where *oldPath* can be either a file or directory. Raises *OSError* exception if *oldPath* does not exist.
+Renames *oldPath* to new *newPath* where *oldPath* can be either a file or directory. Raises *OSError* exception if *oldPath* does not exist.
 
 ```python
 >>> fs.rename('old_test.txt', 'new_test.txt')
@@ -250,6 +291,18 @@ Example: *Loop over all .ini files in the config directory and all sub-directori
 ```python
 >>> for f in fs.find('*.ini', path='config', exclude='local_*'):
 		pass
+```
+
+Example: *Find and get the Vagrantfile in the config directory*:
+
+```python
+>>> f = next( fs.find('Vagrantfile', path='config'), None)
+```
+
+Example: *Find the latest SQL file in the backups directory*:
+
+```python
+>>> f = max( fs.find('*.sql', path='backup'), key=fs.ctime)
 ```
 
 ### fs.finddirs(pattern, path='.', exclude=None, recursive=True)
