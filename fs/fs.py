@@ -3,6 +3,7 @@ import os
 
 """Constants"""
 
+OPEN_FUNC = open
 sep = os.sep
 try:
     import types
@@ -130,7 +131,7 @@ def touch(path):
     @src: http://stackoverflow.com/a/1158096"""
     import os
     try:
-        open(path, 'a+').close()
+        OPEN_FUNC(path, 'a+').close()
     except IOError:
         os.utime(path, None)
 
@@ -204,15 +205,19 @@ def finddirs(pattern, path='.', exclude=None, recursive=True):
                 else:
                     yield dirpath
 
+def open(path, mode='r', **kwargs):
+    """Open *content* to file *path*"""
+    return OPEN_FUNC(path, mode, **kwargs)
+
 def write(path, content, encoding="UTF-8", append=False, raw=False):
     """Write *content* to file *path*"""
     if raw:
         import shutil
-        with open(path, 'wb') as _file:
+        with OPEN_FUNC(path, 'wb') as _file:
             shutil.copyfileobj(content, _file)
     else:
         mode = 'w+' if not append else 'a+'
-        with open(path, mode) as _file:
+        with OPEN_FUNC(path, mode) as _file:
             cont_enc = content.encode(encoding)
             _file.write(content)
 
@@ -226,7 +231,7 @@ def append(*args, **kwargs):
 
 def read(path, encoding="UTF-8"):
     """Read and return content from file *path*"""
-    with open(path, 'r') as _file:
+    with OPEN_FUNC(path, 'r') as _file:
         cont = _file.read()
         return cont.decode(encoding)
 

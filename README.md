@@ -325,6 +325,23 @@ Example: *Loop over all .git directories in the current directory and all subdir
 		pass
 ```
 
+### fs.open(path, mode='r')
+
+Returns a [file object](https://docs.python.org/2/library/stdtypes.html#bltin-file-objects) of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
+
+```python
+>>> fh = fs.open('text.txt')
+```
+
+Example: *Loop through the lines of a file*
+
+```python
+>>> fh = fs.open('config.ini', 'r')
+>>> for line in fh:
+		pass
+```
+
+
 ### fs.read(path, encoding='UTF-8')
 
 Reads and returns the content of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
