@@ -435,6 +435,21 @@ Returns the directory name of a file *path*.
 '/path/to/file'
 ```
 
+## Changelog
+
+### 0.0.3
+
+* Fixed python3 error with fs.read
+* Added tests for fs.write and fs.read
+
+### 0.0.2
+
+* Fixed installation error from missing README.md file
+
+### 0.0.1
+
+* Initial upload to PyPi
+
 ## License
 
 This software is provided under the MIT License.
