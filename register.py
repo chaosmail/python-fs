@@ -14,7 +14,7 @@ doc.markdown = fs.read('README.md')
 fs.write('README.txt', doc.rst)
 
 # Run the register command
-os.system("python setup.py register")
+os.system("python setup.py register sdist upload")
 
 # Remove the rST README
 fs.rm('README.txt')
