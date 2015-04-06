@@ -231,7 +231,7 @@ def append(*args, **kwargs):
 
 def read(path, encoding="UTF-8"):
     """Read and return content from file *path*"""
-    with OPEN_FUNC(path, 'r') as _file:
+    with OPEN_FUNC(path, 'rb') as _file:
         cont = _file.read()
         return cont.decode(encoding)
 
