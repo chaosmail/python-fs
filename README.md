@@ -8,6 +8,14 @@ This is under active development!
 
 ## Installation
 
+Install with the Python Package Manager *pip* with the following command:
+
+```bash
+pip install pyfs
+```
+
+Or install from source:
+
 ```bash
 git clone https://github.com/chaosmail/python-fs.git
 cd python-fs
