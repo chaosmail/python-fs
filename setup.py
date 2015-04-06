@@ -1,11 +1,14 @@
 from distutils.core import setup
+import fs
 
-# Read the long description
-with open('README.md') as file:
-    long_description = file.read()
+try:
+    long_description = fs.read('README.txt')
+except IOError:
+    long_description = fs.read('README.md')
 
 setup(
-    name='fs',
+    name='pyfs',
+    packages=['fs'],
     version='0.0.1',
     description='a pythonic file system wrapper for humans',
     long_description=long_description,
@@ -13,8 +16,8 @@ setup(
     author_email='office@chaosmail.at',
     url='https://github.com/chaosmail/python-fs',
     download_url='https://github.com/chaosmail/python-fs/releases',
-    py_modules=['fs'],
     license='MIT',
+    keywords= ['fs', 'file system', 'filesystem', 'wrapper'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
@@ -23,9 +26,7 @@ setup(
         'Intended Audience :: System Administrators',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: POSIX',
+        'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',
