@@ -6,7 +6,11 @@ python:
   - "3.3"
   - "3.4"
 # command to install dependencies
-script: py.test
+install:
+  - pip install coveralls
+# test command
+script: py.test --cov fs
+after_success: coveralls
 branches:
   only:
     - master

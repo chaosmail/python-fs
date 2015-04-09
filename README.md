@@ -1,6 +1,7 @@
 # Python FS - a pythonic file system wrapper for humans
 
 [![Build Status](https://travis-ci.org/chaosmail/python-fs.svg?branch=master)](https://travis-ci.org/chaosmail/python-fs)
+[![License](http://img.shields.io/:license-mit-blue.svg)](https://raw.githubusercontent.com/chaosmail/python-fs/master/LICENSE)
 
 An easy to use file system wrapper for Python that aims to simplify os, os.path, os.walk, shutils, fnmatch, etc.
 
@@ -232,18 +233,18 @@ Sets the modification timestamp of *path* to the current time or creates the fil
 Generator the returns all files that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
->>> gen = fs.list()
->>> list(gen)
+>>> files = fs.list()
+>>> list(files)
 ['test.txt']
->>> gen = fs.list('some_directory')
->>> list(gen)
+>>> files = fs.list('some_directory')
+>>> list(files)
 ['/path/to/dir/some_directory/another_test.txt']
 ```
 
 Example: *Loop over all files in the current directory*:
 
 ```python
->>> for f in fs.list():
+>>> for filename in fs.list():
 		pass
 ```
 
@@ -252,18 +253,18 @@ Example: *Loop over all files in the current directory*:
 Generator the returns all directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
->>> gen = fs.listdirs()
->>> list(gen)
+>>> dirs = fs.listdirs()
+>>> list(dirs)
 ['some_directory']
->>> gen = fs.listdirs('some_directory')
->>> list(gen)
+>>> dirs = fs.listdirs('some_directory')
+>>> list(dirs)
 []
 ```
 
 Example: *Loop over all directories in the current directory*:
 
 ```python
->>> for d in fs.listdirs():
+>>> for dirname in fs.listdirs():
 		pass
 ```
 
@@ -272,45 +273,45 @@ Example: *Loop over all directories in the current directory*:
 Generator the returns all files that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
->>> gen = fs.find('*.txt')
->>> list(gen)
+>>> files = fs.find('*.txt')
+>>> list(files)
 ['/path/to/file/test.txt', '/path/to/file/some_directory/another_test.txt']
->>> gen = fs.find('*.txt', exclude='another*')
->>> list(gen)
+>>> files = fs.find('*.txt', exclude='another*')
+>>> list(files)
 ['/path/to/file/test.txt']
 ```
 
 Example: *Loop over all .csv files in the current directory*:
 
 ```python
->>> for f in fs.find('*.csv', recursive=False):
+>>> for filename in fs.find('*.csv', recursive=False):
 		pass
 ```
 
 Example: *Loop over all .xls and .xlsx files in the current directory and all sub-directories*:
 
 ```python
->>> for f in fs.find(['*.xls', '*.xlsx']):
+>>> for filename in fs.find(['*.xls', '*.xlsx']):
 		pass
 ```
 
 Example: *Loop over all .ini files in the config directory and all sub-directories except the ones starting with local_*:
 
 ```python
->>> for f in fs.find('*.ini', path='config', exclude='local_*'):
+>>> for filename in fs.find('*.ini', path='config', exclude='local_*'):
 		pass
 ```
 
 Example: *Find and get the Vagrantfile in the config directory*:
 
 ```python
->>> f = next( fs.find('Vagrantfile', path='config'), None)
+>>> filename = next( fs.find('Vagrantfile', path='config'), None)
 ```
 
 Example: *Find the latest SQL file in the backups directory*:
 
 ```python
->>> f = max( fs.find('*.sql', path='backup'), key=fs.ctime)
+>>> filename = max( fs.find('*.sql', path='backup'), key=fs.ctime)
 ```
 
 ### fs.finddirs(pattern, path='.', exclude=None, recursive=True)
@@ -318,18 +319,18 @@ Example: *Find the latest SQL file in the backups directory*:
 Generator the returns all directories that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
->>> gen = fs.finddirs('some*')
->>> list(gen)
+>>> dirs = fs.finddirs('some*')
+>>> list(dirs)
 ['/path/to/file/some_directory']
->>> gen = fs.finddirs('some*', exclude='*directory')
->>> list(gen)
+>>> dirs = fs.finddirs('some*', exclude='*directory')
+>>> list(dirs)
 []
 ```
 
 Example: *Loop over all .git directories in the current directory and all subdirectories*:
 
 ```python
->>> for d in fs.finddirs('.git'):
+>>> for dir in fs.finddirs('.git'):
 		pass
 ```
 
@@ -338,14 +339,14 @@ Example: *Loop over all .git directories in the current directory and all subdir
 Returns a [file object](https://docs.python.org/2/library/stdtypes.html#bltin-file-objects) of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
 
 ```python
->>> fh = fs.open('text.txt')
+>>> file = fs.open('text.txt')
 ```
 
 Example: *Loop through the lines of a file*
 
 ```python
->>> fh = fs.open('config.ini', 'r')
->>> for line in fh:
+>>> file = fs.open('config.ini', 'r')
+>>> for line in file:
 		pass
 ```
 
@@ -377,13 +378,13 @@ Example: *Download an image from an url using [requests](http://docs.python-requ
 
 ```python
 >>> import requests
->>> r = requests.get(url, stream=True)
->>> fs.write(path, r.raw, raw=True)
+>>> res = requests.get(url, stream=True)
+>>> fs.write(path, res.raw, raw=True)
 ```
 
 ### fs.sep
 
-The character used by the operating system to separate pathname components. This is '/' for POSIX and '\\' for Windows.
+The character used by the operating system to separate pathname components. This is '/' for POSIX and '\\\\' for Windows.
 
 ```python
 >>> fs.sep

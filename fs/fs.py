@@ -161,6 +161,7 @@ def find(pattern, path='.', exclude=None, recursive=True):
     """Find files that match *pattern* in *path*"""
     import fnmatch
     import os
+    
     if recursive:
         for root, dirnames, filenames in os.walk(path):
             for pat in _to_list(pattern):
@@ -173,7 +174,7 @@ def find(pattern, path='.', exclude=None, recursive=True):
                         yield filepath
     else:
         for pat in _to_list(pattern):
-            for filename in fnmatch.filter(listfiles(path), pat):
+            for filename in fnmatch.filter(list(path), pat):
                 filepath = join(abspath(path), filename)
                 for excl in _to_list(exclude):
                     if excl and fnmatch.fnmatch(filepath, excl):
@@ -211,33 +212,19 @@ def open(path, mode='r', **kwargs):
 
 def write(path, content, encoding="UTF-8", append=False, raw=False):
     """Write *content* to file *path*"""
-    if raw:
-        import shutil
-        with OPEN_FUNC(path, 'wb') as _file:
+    mode = 'wb' if not append else 'ab'
+    with OPEN_FUNC(path, mode) as _file:
+        if raw:
+            import shutil
             shutil.copyfileobj(content, _file)
-    else:
-        mode = 'w+' if not append else 'a+'
-        with OPEN_FUNC(path, mode) as _file:
-            cont_enc = content.encode(encoding)
-            _file.write(content)
-
-def put(*args, **kwargs):
-    """Alias for write"""
-    return write(*args, **kwargs)
-
-def append(*args, **kwargs):
-    """Alias for write with append=True"""
-    return write(*args, append=True, **kwargs)
+        else:
+            _file.write(content.encode(encoding))
 
 def read(path, encoding="UTF-8"):
     """Read and return content from file *path*"""
     with OPEN_FUNC(path, 'rb') as _file:
         cont = _file.read()
         return cont.decode(encoding)
-
-def get(*args, **kwargs):
-    """Alias for read"""
-    return read(*args, **kwargs)
 
 def join(*args, **kwargs):
     """Join parts of a path together"""
@@ -246,13 +233,10 @@ def join(*args, **kwargs):
         return os.path.join(*args[0])
     return os.path.join(*args, **kwargs)
 
-def cwd(path=None, **kwargs):
+def cwd():
     """Get or set the current working directory"""
     import os
-    if path:
-        chdir(path, **kwargs)
-    else:
-        return os.getcwd(**kwargs)
+    return os.getcwd()
 
 def extname(path, **kwargs):
     """Return the extension from *path*"""
@@ -260,20 +244,35 @@ def extname(path, **kwargs):
     name, ext = os.path.splitext(path, **kwargs)
     return ext
 
-def extension(*args, **kwargs):
-    """Alias for extname"""
-    return extname(*args, **kwargs)
-
-def basename(path, ext="", **kwargs):
+def basename(path, ext=""):
     """Return the file base name from *path*"""
     import os.path
-    return os.path.basename(path, **kwargs).replace(ext, "")
+    return os.path.basename(path).replace(ext, "")
 
-def filename(*args, **kwargs):
-    """Alias for basename"""
-    return basename(*args, **kwargs)
-
-def dirname(path, **kwargs):
+def dirname(path):
     """Return the directory name from *path*"""
     import os.path
-    return os.path.dirname(path, **kwargs)
+    return os.path.dirname(path)
+
+
+""" Aliases """
+
+def append(*args, **kwargs):
+    """Alias for fs.write(append=True)"""
+    return write(*args, append=True, **kwargs)
+
+def get(*args, **kwargs):
+    """Alias for fs.read"""
+    return read(*args, **kwargs)
+
+def put(*args, **kwargs):
+    """Alias for fs.write"""
+    return write(*args, **kwargs)
+
+def filename(*args, **kwargs):
+    """Alias for fs.basename"""
+    return basename(*args, **kwargs)
+
+def extension(*args, **kwargs):
+    """Alias for fs.extname"""
+    return extname(*args, **kwargs)
