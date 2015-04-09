@@ -7,9 +7,9 @@ python:
   - "3.4"
 # command to install dependencies
 install:
-  - pip install coveralls
+  - pip install python-coveralls coveralls
 # test command
-script: py.test --cov fs
+script: py.test --cov=fs
 after_success: coveralls
 branches:
   only:
