@@ -1,5 +1,5 @@
 # coding: utf8
-
+from __future__ import unicode_literals
 import os
 import fs
 
@@ -19,7 +19,7 @@ def test_write():
 
 def test_write_utf8():
 
-    write_content = u""""this is a test content with 
+    write_content = """"this is a test content with 
     utf-8 characters, such as ÀÁÂÂÄ or ¼½¾"""
 
     fs.write(TEST_FILE, write_content)

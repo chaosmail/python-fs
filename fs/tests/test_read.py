@@ -1,5 +1,5 @@
 # coding: utf8
-
+from __future__ import unicode_literals
 import os
 import fs
 
@@ -18,7 +18,7 @@ def test_read():
 
 def test_read_utf8():
 
-    content = u""""this is a test content with 
+    content = """"this is a test content with 
     utf-8 characters, such as ÀÁÂÂÄ or ¼½¾"""
 
     with open(TEST_FILE, 'wb') as file:
