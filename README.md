@@ -231,7 +231,7 @@ Sets the modification timestamp of *path* to the current time or creates the fil
 
 ### fs.list(path='.')
 
-Generator the returns all files that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
+Generator that returns all files that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
 >>> files = fs.list()
@@ -251,7 +251,7 @@ Example: *Loop over all files in the current directory*:
 
 ### fs.listdirs(path='.')
 
-Generator the returns all directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
+Generator that returns all directories that are contained in the directory *path*. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
 >>> dirs = fs.listdirs()
@@ -271,7 +271,7 @@ Example: *Loop over all directories in the current directory*:
 
 ### fs.find(pattern, path='.', exclude=None, recursive=True)
 
-Generator the returns all files that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
+Generator that returns all files that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
 >>> files = fs.find('*.txt')
@@ -317,7 +317,7 @@ Example: *Find the latest SQL file in the backups directory*:
 
 ### fs.finddirs(pattern, path='.', exclude=None, recursive=True)
 
-Generator the returns all directories that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
+Generator that returns all directories that match *pattern* and are contained in the directory *path*. Both *pattern* and *exclude* can be [Unix shell-style wildcards](https://docs.python.org/3.4/library/fnmatch.html) or arrays of wildcards. Raises an *OSError* exception if the directory *path* does not exist.
 
 ```python
 >>> dirs = fs.finddirs('some*')
