@@ -439,6 +439,12 @@ Returns the directory name of a file *path*.
 
 ## Changelog
 
+### 0.0.4
+
+* Fixed errors with fs.find for recurive=False
+* Added tests for fs.find and fs.finddirs
+* Added coverage badge
+
 ### 0.0.3
 
 * Fixed python3 error with fs.read
