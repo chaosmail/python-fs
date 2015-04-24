@@ -384,7 +384,7 @@ u'test'
 
 ### fs.put(path, obj)
 
-Writes an object to a file *path*. Raises an *IOError* exception if the file *path* does not exist.
+Writes an object *obj* to a file *path*. Raises an *IOError* exception if the file *path* does not exist.
 
 ```python
 >>> fs.put('array.dat', [1,2,3,4])
