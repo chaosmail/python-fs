@@ -226,6 +226,26 @@ def read(path, encoding="UTF-8"):
         cont = _file.read()
         return cont.decode(encoding)
 
+def get(path):
+    """Read an object from file"""
+    try:
+        import cPickle as pickle
+    except:
+        import pickle
+
+    with open(path, 'rb') as file:
+        return pickle.load(file)
+
+def put(path, obj):
+    """Write an object to file"""
+    try:
+        import cPickle as pickle
+    except:
+        import pickle
+
+    with open(path, 'wb') as file:
+        return pickle.dump(obj, file)
+
 def join(*args, **kwargs):
     """Join parts of a path together"""
     import os.path
@@ -254,20 +274,11 @@ def dirname(path):
     import os.path
     return os.path.dirname(path)
 
-
 """ Aliases """
 
 def append(*args, **kwargs):
     """Alias for fs.write(append=True)"""
     return write(*args, append=True, **kwargs)
-
-def get(*args, **kwargs):
-    """Alias for fs.read"""
-    return read(*args, **kwargs)
-
-def put(*args, **kwargs):
-    """Alias for fs.write"""
-    return write(*args, **kwargs)
 
 def filename(*args, **kwargs):
     """Alias for fs.basename"""
