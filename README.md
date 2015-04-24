@@ -478,6 +478,11 @@ Returns the directory name of a file *path*.
 
 ## Changelog
 
+### 0.0.5
+
+* Added fs.put to store object to disc
+* Added fs.get to load object from disc
+
 ### 0.0.4
 
 * Fixed errors with fs.find for recurive=False
