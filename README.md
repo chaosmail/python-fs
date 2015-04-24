@@ -351,16 +351,6 @@ Example: *Loop through the lines of a file*
 		pass
 ```
 
-
-### fs.read(path, encoding='UTF-8')
-
-Reads and returns the content of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
-
-```python
->>> fs.read('text.txt')
-u'test'
-```
-
 ### fs.write(path, content, encoding='UTF-8', append=False, raw=False)
 
 Writes the content *content* of a file *path*.
@@ -382,6 +372,55 @@ Example: *Download an image from an url using [requests](http://docs.python-requ
 >>> res = requests.get(url, stream=True)
 >>> fs.write(path, res.raw, raw=True)
 ```
+
+### fs.read(path, encoding='UTF-8')
+
+Reads and returns the content of a file *path*. Raises an *IOError* exception if the file *path* does not exist.
+
+```python
+>>> fs.read('text.txt')
+u'test'
+```
+
+### fs.put(path, obj)
+
+Writes an object to a file *path*. Raises an *IOError* exception if the file *path* does not exist.
+
+```python
+>>> fs.put('array.dat', [1,2,3,4])
+```
+
+Example: *Save a trained SVM classifier using [sklearn](http://scikit-learn.org/) to local disc*:
+
+```python
+>>> from sklearn import svm
+>>> X = [[0, 0], [1, 1]]
+>>> y = [0, 1]
+>>> clf = svm.SVC()
+>>> clf.fit(X, y)
+SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0, degree=3, gamma=0.0,
+  kernel='rbf', max_iter=-1, probability=False, random_state=None,
+  shrinking=True, tol=0.001, verbose=False)
+>>> fs.put('svm.dat', clf)
+```
+
+### fs.get(path, encoding='UTF-8')
+
+Reads and returns an object from a file *path*. Raises an *IOError* exception if the file *path* does not exist.
+
+```python
+>>> fs.get('array.dat')
+[1,2,3,4]
+```
+
+Example: *Read a trained SVM classifier using [sklearn](http://scikit-learn.org/) from local disc*:
+
+```python
+>>> clf = fs.get('svm.dat')
+>>> clf.predict([[2., 2.]])
+array([1])
+```
+
 
 ### fs.sep
 
