@@ -40,6 +40,11 @@ def rename(oldPath, newPath, **kwargs):
     import os
     return os.rename(oldPath, newPath, **kwargs)
 
+def copy(srcPath, destPath):
+    """copy the file from srcPath to destPath"""
+    import shutils
+    return shutil.copy(srcPath, destPath)
+
 def truncate(path, **kwargs):
     """remove all files and directories 
     from a directory *path*"""
@@ -47,21 +52,30 @@ def truncate(path, **kwargs):
     rmdirs(listdirs(path))
 
 def chdir(path, **kwargs):
-    """Change current working directory"""
+    """change current working directory"""
     import os
     return os.chdir(path, **kwargs)
 
-def chown(path):
-    pass
+def chown(path, uid, gid):
+    """change ownership of path"""
+    import os
+    return os.chown(path, uid, gid)
 
 def chmod(path, mode):
-    pass
+    """change pernmissions of path"""
+    import os, stat
+    st = os.stat(path)
+    return os.chmod(path, st.st_mode | mode)
 
 def link(srcPath, destPath):
-    pass
+    """create a hard link from srcPath to destPath"""
+    import os
+    return os.link(srcPath, destPath)
 
-def symlink(srcPath, destPath, type):
-    pass
+def symlink(srcPath, destPath):
+    """create a symbolic link from srcPath to destPath"""
+    import os
+    return os.symlink(srcPath, destPath)
 
 def stat(path):
     """Return file stats"""
@@ -254,9 +268,14 @@ def join(*args, **kwargs):
     return os.path.join(*args, **kwargs)
 
 def cwd():
-    """Get or set the current working directory"""
+    """Get the current working directory"""
     import os
     return os.getcwd()
+
+def home():
+    """Get the home directory"""
+    from os.path import expanduser
+    return expanduser("~")
 
 def extname(path, **kwargs):
     """Return the extension from *path*"""
