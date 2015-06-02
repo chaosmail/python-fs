@@ -106,6 +106,15 @@ Returns time of most recent content modification of *path* where path can be eit
 1427919315.960152
 ```
 
+### fs.mode(path)
+
+Returns permission mode of *path* where path can be either a file or directory. Raises *OSError* exception if *path* does not exist.
+
+```python
+>>> fs.mode('test.txt')
+33252
+```
+
 ### fs.rename(oldPath, newPath)
 
 Renames *oldPath* to new *newPath* where *oldPath* can be either a file or directory. Raises *OSError* exception if *oldPath* does not exist.
@@ -131,6 +140,52 @@ Changes the current directory to *path*.
 >>> fs.chdir('some_directory')
 ```
 
+### fs.chown(path, user=None, group=None)
+
+Changes the ownership of a path *path* to the owner *user* and group *group*. If *user* or *group* is *None*, the permission for this user or group stays unchanged. Raises *PermissionError* exception if the current user is not allowed to change the permission. Raises *KeyError* exception if the user or group don't exist. Raises *FileNotFoundError* if *path* does not exist.
+
+```python
+>>> fs.chown('some_directory', user='ckoerner')
+>>> fs.chown('/var/www', group='www-data')
+```
+
+### fs.chmod(path, mode, op='+')
+
+Sets the permissions *mode* of a path *path*.
+
+```python
+>>> fs.chmod('some_directory', 0o755)
+```
+
+Example: *Add exectuable permission to a script run.sh*
+
+```python
+>>> import stat
+>>> fs.chmod('run.sh', fs.mode('run.sh') | stat.S_IEXEC)
+```
+
+Example: *Set a 644 permission for a file keys.pem*
+
+```python
+>>> fs.chmod('keys.pem', 0o644)
+```
+
+### fs.link(srcPath, destPath)
+
+Creates a hard link from *srcPath* to *destPath*.
+
+```python
+>>> fs.link('/some/dir', 'linkhere')
+```
+
+### fs.symlink(srcPath, destPath)
+
+Creates a symbolic link from *srcPath* to *destPath*.
+
+```python
+>>> fs.symlink('/some/dir/file', 'symlinkhere')
+```
+
 ### fs.cwd()
 
 Get the current working directory.
@@ -138,6 +193,15 @@ Get the current working directory.
 ```python
 >>> fs.cwd()
 '/path/to/directory'
+```
+
+### fs.home()
+
+Get the current home directory.
+
+```python
+>>> fs.home()
+'/home/ckoerner'
 ```
 
 ### fs.abspath(path)
@@ -478,21 +542,28 @@ Returns the directory name of a file *path*.
 
 ## Changelog
 
+### 0.0.6
+
+* Added fs.home() to retrieve the home directory
+* Added fs.chown(), fs.chmod(), fs.link() and fs.symlink()
+* Added fs.mode() as shortcut for fs.stat(path).st_mode
+* Added fs.cd() alias for fs.chdir()
+
 ### 0.0.5
 
-* Added fs.put to store object to disc
-* Added fs.get to load object from disc
+* Added fs.put() to store object to disc
+* Added fs.get() to load object from disc
 
 ### 0.0.4
 
-* Fixed errors with fs.find for recurive=False
-* Added tests for fs.find and fs.finddirs
+* Fixed errors with fs.find() for recurive=False
+* Added tests for fs.find() and fs.finddirs()
 * Added coverage badge
 
 ### 0.0.3
 
-* Fixed python3 error with fs.read
-* Added tests for fs.write and fs.read
+* Fixed python3 error with fs.read()
+* Added tests for fs.write() and fs.read()
 
 ### 0.0.2
 

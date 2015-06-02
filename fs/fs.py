@@ -56,16 +56,20 @@ def chdir(path, **kwargs):
     import os
     return os.chdir(path, **kwargs)
 
-def chown(path, uid, gid):
+def chown(path, user=None, group=None):
     """change ownership of path"""
     import os
+    import pwd
+    import grp
+    uid = pwd.getpwnam(user).pw_uid if user else -1
+    gid = grp.getgrnam(group).gr_gid if group else -1
     return os.chown(path, uid, gid)
 
 def chmod(path, mode):
     """change pernmissions of path"""
     import os, stat
     st = os.stat(path)
-    return os.chmod(path, st.st_mode | mode)
+    return os.chmod(path, mode)
 
 def link(srcPath, destPath):
     """create a hard link from srcPath to destPath"""
@@ -93,6 +97,10 @@ def atime(path):
 def mtime(path):
     """time of most recent content modification"""
     return stat(path).st_mtime
+
+def mode(path):
+    """Return the mode of the path"""
+    return stat(path).st_mode
 
 def abspath(path, **kwargs):
     """Return the absolute path of *path*"""
@@ -306,3 +314,7 @@ def filename(*args, **kwargs):
 def extension(*args, **kwargs):
     """Alias for fs.extname"""
     return extname(*args, **kwargs)
+
+def cd(*args, **kwargs):
+    """Alias for fs.chdir"""
+    return chdir(*args, **kwargs)
