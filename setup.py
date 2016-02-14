@@ -9,7 +9,7 @@ except IOError:
 setup(
     name='pyfs',
     packages=['fs'],
-    version='0.0.6',
+    version='0.0.7',
     description='a pythonic file system wrapper for humans',
     long_description=long_description,
     author='Christoph Koerner',
@@ -19,7 +19,7 @@ setup(
     license='MIT',
     keywords= ['fs', 'file system', 'filesystem', 'wrapper'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',

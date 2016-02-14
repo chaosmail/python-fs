@@ -552,6 +552,11 @@ Returns the directory name of a file *path*.
 
 ## Changelog
 
+### 0.0.7
+
+* Added fs.addpath() to add a path to the system path
+* Added fs.basename(path, ext=False) to automatically return filename without extension
+
 ### 0.0.6
 
 * Added fs.home() to retrieve the home directory
