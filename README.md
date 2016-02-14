@@ -6,8 +6,6 @@
 
 An easy to use file system wrapper for Python that aims to simplify os, os.path, os.walk, shutils, fnmatch, etc.
 
-This is under active development!
-
 ## Installation
 
 Install with the Python Package Manager *pip* with the following command:
@@ -216,7 +214,7 @@ Get the current home directory.
 
 ### fs.abspath(path)
 
-Returns the absolute path from a relative *path* where *path* can be either file or directory.
+Returns the absolute path from a relative *path* where *path* can be either file or directory. Raises a *ValueError* if the directory *path* does not exist.
 
 ```python
 >>> fs.abspath('test.txt')
