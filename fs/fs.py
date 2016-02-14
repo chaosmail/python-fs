@@ -307,6 +307,8 @@ def dirname(path):
 def addpath(path):
     """Add *path* to system path"""
     import sys
+    if not exists(path):
+        raise ValueError('Path %s does not exist' % path)
     sys.path.insert(1, path)
 
 """ Aliases """

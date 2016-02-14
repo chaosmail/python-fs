@@ -14,3 +14,9 @@ def test_addpath():
 
   fs.addpath(TEST_DIR)
   import test_foo_bar
+
+def test_addpath_not_existing_path():
+  WRONG_TEST_DIR = 'foobartest'
+
+  with pytest.raises(ValueError):
+    fs.addpath(WRONG_TEST_DIR)
