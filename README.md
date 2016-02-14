@@ -170,6 +170,16 @@ Example: *Set a 644 permission for a file keys.pem*
 >>> fs.chmod('keys.pem', 0o644)
 ```
 
+### fs.addpath(path)
+
+Adds path *path* to the system path, so that modules can be imported from this path.
+
+```python
+>>> fs.addpath('/foo/bar')
+>>> import foo
+```
+
+
 ### fs.link(srcPath, destPath)
 
 Creates a hard link from *srcPath* to *destPath*.

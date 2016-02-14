@@ -11,7 +11,7 @@ try:
 except Exception:
     LIST_TYPE = list
 
-    
+
 """Helper Functions"""
 
 def _is_list(e):
@@ -46,7 +46,7 @@ def copy(srcPath, destPath):
     return shutil.copy(srcPath, destPath)
 
 def truncate(path, **kwargs):
-    """remove all files and directories 
+    """remove all files and directories
     from a directory *path*"""
     rmfiles(list(path))
     rmdirs(listdirs(path))
@@ -183,7 +183,7 @@ def find(pattern, path='.', exclude=None, recursive=True):
     """Find files that match *pattern* in *path*"""
     import fnmatch
     import os
-    
+
     if recursive:
         for root, dirnames, filenames in os.walk(path):
             for pat in _to_list(pattern):
@@ -294,12 +294,20 @@ def extname(path, **kwargs):
 def basename(path, ext=""):
     """Return the file base name from *path*"""
     import os.path
-    return os.path.basename(path).replace(ext, "")
+    if ext is False:
+        return os.path.basename(path).replace(extname(path), "")
+    else:
+        return os.path.basename(path).replace(ext, "")
 
 def dirname(path):
     """Return the directory name from *path*"""
     import os.path
     return os.path.dirname(path)
+
+def addpath(path):
+    """Add *path* to system path"""
+    import sys
+    sys.path.insert(1, path)
 
 """ Aliases """
 
