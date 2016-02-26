@@ -548,7 +548,29 @@ Returns the directory name of a file *path*.
 '/path/to/file'
 ```
 
+### fs.add_suffix(path, suffix="")
+
+Adds suffix to filename *path* and returns the new filename.
+
+```python
+>>> fs.add_suffix('/path/to/file/test.txt', suffix='_new')
+'/path/to/file/test_new.txt'
+```
+
+### fs.add_prefix(path, prefix="")
+
+Adds prefix to filename *path* and returns the new filename.
+
+```python
+>>> fs.add_prefix('/path/to/file/test.txt', prefix='new_')
+'/path/to/file/new_test.txt'
+```
+
 ## Changelog
+
+### 0.0.8
+
+* Added fs.add_suffix() and fs.add_prefix()
 
 ### 0.0.7
 

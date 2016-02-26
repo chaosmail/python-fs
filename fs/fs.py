@@ -304,6 +304,14 @@ def dirname(path):
     import os.path
     return os.path.dirname(path)
 
+def add_suffix(path, suffix=""):
+    """Adds a suffix to a filename *path*"""
+    return join(dirname(path), basename(path, ext=False) + suffix + extname(path))
+
+def add_prefix(path, prefix=""):
+    """Adds a suffix to a filename *path*"""
+    return join(dirname(path), prefix + basename(path))
+
 def addpath(path):
     """Add *path* to system path"""
     import sys
