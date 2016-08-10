@@ -67,7 +67,8 @@ def chown(path, user=None, group=None):
 
 def chmod(path, mode):
     """change pernmissions of path"""
-    import os, stat
+    import os
+    import stat
     st = os.stat(path)
     return os.chmod(path, mode)
 
