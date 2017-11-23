@@ -41,6 +41,15 @@ True
 True
 ```
 
+### fs.mkdir(path, recursive=True [, mode])
+
+Creates the directory specified in *path*.
+
+```python
+>>> fs.mkdir('foo/bar/baz')
+>>> fs.mkdir('other', recursive=False, mode=0644)
+```
+
 ### fs.isfile(path)
 
 Returns True if the *path* exists and is a file. Returns False if *path* is a directory or does not exist.
