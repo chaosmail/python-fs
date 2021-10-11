@@ -1,4 +1,5 @@
 import os.path
+import pytest
 import fs
 import unittest
 
@@ -15,6 +16,7 @@ def test_mkdir():
     fs.mkdir(path)
 
     assert os.path.exists(path) is True
+    os.rmdir(path)
 
 def test_mkdir_recursive():
 
@@ -27,6 +29,7 @@ def test_mkdir_recursive():
     fs.mkdir(path)
 
     assert os.path.exists(path) is True
+    os.removedirs(path)
 
 def test_mkdir_recursive_fail():
 
@@ -36,7 +39,5 @@ def test_mkdir_recursive_fail():
     if (os.path.exists(path)):
         raise ValueError("Directory %s already exists!" % path)
 
-    try:
+    with pytest.raises(FileNotFoundError):
         fs.mkdir(path, recursive=False)
-    except FileNotFoundError:
-        pass

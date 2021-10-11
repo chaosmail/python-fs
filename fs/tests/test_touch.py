@@ -26,6 +26,9 @@ def test_touch_on_new_file():
 
     assert os.path.exists(new_file) is True
 
+    os.remove(new_file)
+
+
 @pytest.mark.skipif(os.name == "nt", reason="does not work on windows")
 def test_touch_on_directory():
 

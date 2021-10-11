@@ -14,6 +14,7 @@ def test_rename_file():
     fs.rename(TEST_FILE, rename_file)
 
     assert os.path.exists(rename_file) is True
+    os.remove(rename_file)
 
 def test_rename_directory():
 
@@ -26,3 +27,4 @@ def test_rename_directory():
     fs.rename(TEST_DIR_2, rename_dir)
 
     assert os.path.exists(rename_dir) is True
+    os.rmdir(rename_dir)
