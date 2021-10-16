@@ -39,5 +39,5 @@ def test_mkdir_recursive_fail():
     if (os.path.exists(path)):
         raise ValueError("Directory %s already exists!" % path)
 
-    with pytest.raises(FileNotFoundError):
+    with pytest.raises(Exception):
         fs.mkdir(path, recursive=False)
