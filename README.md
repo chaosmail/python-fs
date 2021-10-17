@@ -1,6 +1,7 @@
 # Python FS - a pythonic file system wrapper for humans
 
 ![Build Status](https://github.com/chaosmail/python-fs/workflows/CI/badge.svg)
+[![PyPI version](https://badge.fury.io/py/pyfs.svg)](https://badge.fury.io/py/pyfs)
 [![Coverage Status](https://coveralls.io/repos/chaosmail/python-fs/badge.svg)](https://coveralls.io/r/chaosmail/python-fs)
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://raw.githubusercontent.com/chaosmail/python-fs/master/LICENSE)
 
