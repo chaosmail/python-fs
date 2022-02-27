@@ -1,5 +1,6 @@
 import fs
 import pytest
+import sys
 
 from .setup import *
 
@@ -14,6 +15,8 @@ def test_addpath():
 
   fs.addpath(TEST_DIR)
   import test_foo_bar
+  sys.path.remove(TEST_DIR)
+  del sys.modules['test_foo_bar']
 
 def test_addpath_not_existing_path():
   WRONG_TEST_DIR = 'foobartest'
